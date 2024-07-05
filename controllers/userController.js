@@ -153,4 +153,27 @@ module.exports = {
       return res.status(500).json(error);
     }
   },
+
+  // Get a user's thoughts
+  async getUserThoughts(req, res) {
+    try {
+      const userId = req.params.userId;
+
+      // Validate ObjectId
+      if (!ObjectId.isValid(userId)) {
+        return res.status(400).json({ message: 'Invalid user ID' });
+      }
+
+      const user = await User.findOne({ _id: userId }).populate('thoughts').select('thoughts');
+
+      if (!user) {
+        return res.status(404).json({ message: 'No user with that ID' });
+      }
+
+      return res.status(200).json(user.thoughts);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json(error);
+    }
+  },
 };

@@ -11,6 +11,7 @@ const {
 
 // /api/thoughts
 router.route('/').get(getThoughts).post(createThought);
+// create thought route /api/thoughts/user/<userId>
 
 // /api/thoughts/:thoughtId
 router.route('/:thoughtId')
@@ -21,6 +22,6 @@ router.route('/:thoughtId')
 // Add a thought to a user
 router.route('/user/:userId').post(addThoughtToUser);
 
-// create thought route /api/thoughts/user/<userId>
-
 module.exports = router;
+
+

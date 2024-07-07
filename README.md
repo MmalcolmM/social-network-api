@@ -23,6 +23,8 @@ After installing you can follow these steps to get the app working.
 - Lastly run "npm start" to start the server.
 - Open Postman and create a GET request at http://localhost:3001
 
+- Here's a link to a video demo: https://watch.screencastify.com/v/UURlB5Js9y8ECWCNI7y2
+
 
 
 ## Usage

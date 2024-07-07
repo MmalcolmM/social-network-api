@@ -87,11 +87,15 @@ module.exports = {
       });
 
       // Update the user's thoughts array
-      await User.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { _id: userId },
         { $push: { thoughts: newThought._id } },
         { new: true }
       );
+
+      if (!user) {
+        return res.status(404).json({ message: 'No user with that ID' });
+      }
 
       return res.status(200).json(newThought);
     } catch (error) {
@@ -99,4 +103,31 @@ module.exports = {
       return res.status(500).json(error);
     }
   },
+  
+    async addReactionToThought(req, res) {
+      try {
+        const { thoughtId } = req.params
+        const { reactionId } = req.body;
+        
+        if(!thoughtId || !reactionId) {
+          return res.status(404).json({ message: 'No thought with that ID'})
+  
+        }
+
+        const thought = await Thought.findOneAndUpdate(
+          { _id: thoughtId },
+          { $addToSet: { thoughts: thoughtId } },
+          { new: true }
+        );
+
+        if (!thought){
+          return res.status(404).json({ message: 'No thought with that Id'})
+        }
+
+        return res.status(200).json(thought)
+      } catch (error) {
+        console.log(error);
+      return res.status(500).json(error);
+      }
+    }
 };
